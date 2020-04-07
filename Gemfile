@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 gem 'rack'
-gem 'sinatra'
+gem 'sinatra', require: 'sinatra/base'
 gem 'sinatra-contrib'
 gem 'sinatra-params'
 gem 'sinatra-activerecord'

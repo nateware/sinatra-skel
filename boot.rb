@@ -12,9 +12,15 @@ if ActiveRecord::Base.connection.migration_context.needs_migration?
   raise 'Migrations are pending. Run `rake db:migrate` to resolve the issue.'
 end
 
-require 'sinatra/base'
+require 'sinatra/base' # See Gemfile
 require 'sinatra/custom_logger'
+require 'sinatra/namespace'
+require 'mustache/sinatra'
+
 class App < Sinatra::Base
+  register Sinatra::Namespace
+  register Mustache::Sinatra
+
   configure :development do
     require "sinatra/reloader"
     register Sinatra::Reloader
@@ -33,4 +39,4 @@ class App < Sinatra::Base
   end
 end
 
-require_all "#{settings.root}/app"
+require_all "#{App.settings.root}/app"
