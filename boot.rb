@@ -3,11 +3,6 @@ ENV['APP_ENV'] ||= "development"
 require 'bundler/setup'
 Bundler.require(:default, ENV['APP_ENV'])
 
-ActiveRecord::Base.establish_connection(
-  :adapter => "sqlite3",
-  :database => "db/#{ENV['APP_ENV']}.sqlite"
-)
-
 if ActiveRecord::Base.connection.migration_context.needs_migration?
   raise 'Migrations are pending. Run `rake db:migrate` to resolve the issue.'
 end

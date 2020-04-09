@@ -4,8 +4,8 @@ class App
       data = {
         title: 'Movies',
         movies: [
-          {'name' => "Star Wars", 'price' => '10.99'},
-          {'name' => "Star Trek", 'price' => '14.99'}
+          {'name' => "Star Wars", 'price' => '15.99'},
+          {'name' => "Star Trek", 'price' => '9.99'}
         ]
       }
       liquid :'movies/index', locals: data
