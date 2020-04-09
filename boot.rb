@@ -13,6 +13,7 @@ require 'sinatra/namespace'
 
 class App < Sinatra::Base
   register Sinatra::Namespace
+  register Sinatra::RespondWith
 
   configure :development do
     require "sinatra/reloader"
