@@ -1,5 +1,4 @@
 class App
-  puts 'loaded'
   namespace '/movies' do
     get do
       data = {
