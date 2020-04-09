@@ -1,0 +1,6 @@
+Movies for sale:
+<ul id="products">
+    {% for movie in movies %}
+      <li>{{ movie.name }} - only {{ movie.price}}</li>
+    {% endfor %}
+</ul>

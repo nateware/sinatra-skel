@@ -15,11 +15,9 @@ end
 require 'sinatra/base' # See Gemfile
 require 'sinatra/custom_logger'
 require 'sinatra/namespace'
-require 'mustache/sinatra'
 
 class App < Sinatra::Base
   register Sinatra::Namespace
-  register Mustache::Sinatra
 
   configure :development do
     require "sinatra/reloader"

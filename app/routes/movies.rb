@@ -2,7 +2,13 @@ class App
   puts 'loaded'
   namespace '/movies' do
     get do
-      mustache 'movies/index'
+      data = {
+        movies: [
+          {'name' => "Star Wars", 'price' => '10.99'},
+          {'name' => "Star Trek", 'price' => '14.99'}
+        ]
+      }
+      liquid :'movies/index', locals: data
     end
   end
 end
