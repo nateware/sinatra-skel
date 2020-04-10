@@ -3,11 +3,17 @@ class App
     halt 200
   end
 
+#   get '/test' do
+#     respond_to do |r|
+#       r.html { 'test' }
+#       r.json { {success: true} }
+#     end
+#   end
   get '/test' do
-    respond_to do |r|
-      r.html { 'test' }
-      r.json { {success: true} }
-    end
+    'test'
+  end
+
+  get '/test.json' do
+    json json: {:success => true}
   end
 end
-  
