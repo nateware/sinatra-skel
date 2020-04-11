@@ -1,20 +1,27 @@
 # Rakefile
 require 'sinatra/activerecord/rake'
 require './boot'
+require 'rake/testtask'
 
-require 'csv'
+task default: "test"
+desc "Run test suite (loads DB/etc)"
+task :test do
+  sh 'rake db:test:prepare run_tests APP_ENV=test RAILS_ENV=test' 
+end
+
+Rake::TestTask.new do |task|
+  task.name = :run_tests
+  task.ruby_opts << '-r./boot' # load the app
+  task.ruby_opts << '-r./test/test_helper'
+  task.ruby_opts << '-W0'
+  task.pattern = 'test/**/*_test.rb'
+  task.verbose = true
+end
+
+require './lib/db_import'
 namespace :db do
   desc "Load database from db/data/*.csv files"
   task :import do
-    Dir["#{App.settings.root}/db/data/*.csv"].each do |file|
-      model = File.basename(file).sub(/\.csv/, '').singularize.camelize.constantize
-      puts "Loading #{model} from #{file}"
-      model.transaction do
-        CSV.foreach(file, headers: true) do |row|
-          puts "  #{row.to_h}"
-          model.create! row.to_h
-        end
-      end
-    end
+    DbImport.load_all("#{App.settings.root}/db/data")
   end
 end

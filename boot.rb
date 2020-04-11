@@ -3,10 +3,6 @@ ENV['APP_ENV'] ||= "development"
 require 'bundler/setup'
 Bundler.require(:default, ENV['APP_ENV'])
 
-require 'sinatra/base' # See Gemfile
-require 'sinatra/custom_logger'
-require 'sinatra/namespace'
-require 'sinatra/json'
 require 'will_paginate/active_record'
 
 class App < Sinatra::Base
@@ -20,23 +16,31 @@ class App < Sinatra::Base
   }
 
   configure :development do
-    require "sinatra/reloader"
     register Sinatra::Reloader
     after_reload do
-      logger.debug 'App reloaded'
+      logger.debug "App reloaded"
     end
   end
 
   configure :production do
   end
 
-  configure :development, :production do
+  configure do
     # Log to STDOUT because we plan on Docker
     # logger = Logger.new(File.open("#{root}/log/#{environment}.log", 'a'))
     logger = Logger.new(STDOUT)
+    logger.level = Logger::DEBUG if development? or test?
     set :logger, logger
     STDOUT.sync = true
   end
 end
 
-require_all "#{App.settings.root}/app"
+# leverage autoloading magic
+ActiveSupport::Dependencies.autoload_paths = [
+  "#{App.settings.root}/app/models",
+  "#{App.settings.root}/app/helpers"
+]
+Dir["#{App.settings.root}/app/routes/*.rb"].each{|f| require f }
+
+# End with this
+App.logger.info "App bootstrapped with APP_ENV=#{App.settings.environment}"

@@ -1,14 +1,21 @@
 source 'https://rubygems.org'
+
 gem 'rack'
+gem 'rake'
 gem 'sinatra', require: 'sinatra/base'
 gem 'sinatra-contrib'
 gem 'sinatra-params'
-gem 'sinatra-activerecord', require: 'sinatra/activerecord'
-gem 'activerecord-import'
-gem 'liquid'
-gem 'mustache-sinatra', require: 'mustache/sinatra'
+gem 'sinatra-activerecord'
+gem 'sqlite3'
+# gem 'require_all'
+
+# gem 'liquid'
+gem 'mustache-sinatra'
 gem 'will_paginate'
 # gem 'ruby-handlebars'
-gem 'require_all'
-gem 'sqlite3'
-gem 'rake'
+
+group :test do
+  gem 'minitest'
+  gem 'minitest-matchers_vaccine'
+  gem 'json_matchers'
+end
