@@ -9,6 +9,7 @@ class App < Sinatra::Base
   register Sinatra::Namespace
   register WillPaginate::Sinatra
   # register Sinatra::RespondWith
+  helpers Sinatra::Param
 
   register Mustache::Sinatra
   set :mustache, {
